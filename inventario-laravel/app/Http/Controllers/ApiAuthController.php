@@ -14,7 +14,7 @@ class ApiAuthController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request): View
+    public function login(Request $request): View
     {
         $request->validate([
             'email' => 'required|email',

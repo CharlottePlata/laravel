@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -13,7 +12,10 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Request para manejar el proceso de autenticacion del ususario
+     * en app
+     * Valida los datos enviados, autentica  el usuario y controla los intentos
+     * repetidos para evita ataques de fuerza bruta
      */
     public function authorize(): bool
     {
