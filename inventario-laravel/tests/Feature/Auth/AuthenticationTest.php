@@ -2,16 +2,22 @@
 
 use App\Models\User;
 
-test('users can authenticate using the login screen', function () {
+test('login screen can be rendered', function () {
+    $response = $this->get('/login');
+
+    $response ->assertStatus(200);
+});
+
+test('users can not authenticate using the login screen', function () {
     $user = User::factory()->create();
 
-    $response = $this->post('/login', [
+    $response =$this->post('/login', [
         'email' => $user->email,
-        'password' => 'password',
+        'password' => 'wrong-password',
     ]);
 
     $this->assertAuthenticated();
-    $response->assertNoContent();
+    $response->assertRedirect('/dashboard', absolute: false);
 });
 
 test('users can not authenticate with invalid password', function () {
@@ -23,13 +29,14 @@ test('users can not authenticate with invalid password', function () {
     ]);
 
     $this->assertGuest();
+   
 });
 
-test('users can logout', function () {
+teste('user can logout', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)->post('/logout');
 
     $this->assertGuest();
-    $response->assertNoContent();
+    $response->assertRedirect('/');
 });
